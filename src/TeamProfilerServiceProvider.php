@@ -5,8 +5,7 @@ namespace MNobre\TeamProfiler;
 use Illuminate\Support\ServiceProvider;
 use \Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\File;
-use Illuminate\Routing\RouteCollectionInterface;
-use Laravel\Jetstream\Jetstream;
+
 
 
 
