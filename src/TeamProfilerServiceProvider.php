@@ -6,9 +6,6 @@ use Illuminate\Support\ServiceProvider;
 use \Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\File;
 
-
-
-
 class TeamProfilerServiceProvider extends ServiceProvider
 {
     public function register(): void
