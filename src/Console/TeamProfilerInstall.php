@@ -3,7 +3,6 @@
 namespace MNobre\TeamProfiler\Console;
 
 use Illuminate\Console\Command;
-use TomatoPHP\ConsoleHelpers\Traits\RunCommand;
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 
@@ -11,7 +10,6 @@ use Composer\Installer\PackageEvent;
 
 class TeamProfilerInstall extends Command
 {
-    use RunCommand;
 
     /**
      * The name and signature of the console command.
