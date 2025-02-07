@@ -1,7 +1,7 @@
 {
     "name": "m-nobre/team-profiler",
     "type": "library",
-    "description": "Larvel Teams Profiler (Change frontend Team denomination)",
+    "description": "Laravel Jetstream Teams Profiler (Change frontend Team denomination via routes and translation)",
     "keywords": [
         "php",
         "laravel",
