@@ -48,9 +48,6 @@
         "post-package-uninstall": "MNobre\\TeamProfiler\\Console\\TeamProfilerInstall::postPackageUninstall()"
     },
     "require": {
-        "php": "^8.1|^8.2",
-        "tomatophp/console-helpers": "^1.1"
-    },
-    
-    "version": "v1.0.0"
+        "php": "^8.1|^8.2"
+    }    
 }
