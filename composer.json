@@ -1,0 +1,56 @@
+{
+    "name": "m-nobre/team-profiler",
+    "type": "library",
+    "description": "Larvel Teams Profiler (Change frontend Team denomination)",
+    "keywords": [
+        "php",
+        "laravel",
+        "template"
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "MNobre\\TeamProfiler\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MNobre\\TeamProfiler\\Tests\\": "tests/src/",
+            "MNobre\\TeamProfiler\\Tests\\Database\\Factories\\": "tests/database/factories"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MNobre\\TeamProfiler\\TeamProfilerServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Mário Nobre",
+            "email": "m.nobre@ymail.com"
+        }
+    ],
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "scripts": {
+        "testbench": "vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse src tests",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint",
+        "post-package-uninstall": "MNobre\\TeamProfiler\\Console\\TeamProfilerInstall::postPackageUninstall()"
+    },
+    "require": {
+        "php": "^8.1|^8.2",
+        "tomatophp/console-helpers": "^1.1"
+    },
+    
+    "version": "v1.0.0"
+}
