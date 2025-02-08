@@ -1,4 +1,4 @@
-![Screenshot](https://raw.githubusercontent.com/m-nobre/team-profiler/master/art/screenshot.jpg)
+![Screenshot](https://raw.githubusercontent.com/m-nobre/team-profiler/master/art/screenshot.png)
 
 # Team profiler
 
