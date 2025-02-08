@@ -8,9 +8,11 @@
 
 Laravel Teams Profiler (Change frontend Team denomination)
 
-Just by adding non intrusive routes (which become ineffective upon package removal despite requiring manual removal) this package makes it possible to effectively change the appearance of all team routes into the denomination chose in the team-profiler.php config file which can be published by following instructions below.
-The remaining terms spread out in Jetstream views are also and literaly translated into the denomination in the EN locale, for this, lang folder with en.json will be created.
+This package makes it possible to change the appearance of all jetstream team routes into the chosen denomination ('project' by default) and that can be changed on the fly in the team-profiler.php config file after published.
+Not only the routes but all occurrences of "Team" or "team" in Jetstream views will also, and literaly, be translated into the chosen denomination in the EN locale, for this, the native lang folder with en.json will be created, when changing denomination, only need to delete the Lang/en.json and a new translation is generated on boot.
+
 Please remember that despite the apparent stability, this is still in development and should be only used as a starting point for more robust solution
+
 ## Installation
 
 
