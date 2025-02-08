@@ -13,18 +13,22 @@ The remaining terms spread out in Jetstream views are also and literaly translat
 Please remember that despite the apparent stability, this is still in development and should be only used as a starting point for more robust solution
 ## Installation
 
+
+>:warning: **New applications only** 
+>Team-Profiler should only be installed into new Laravel Jetstream applications 
+>Requirements: 
+>> EN locale 
+>> Creates a Lang/en.json file, does not exist in new applications. 
+>> To change denomination from "project" please publish config file. 
+>> Once denomination has been changed, lang file needs to be deleted so it's generated using the new denomination. 
+>For all the reasons above, Team-Profiler should **only** be installed into **new** Laravel Jetstream applications, attempting to install Team-Profiler into an existing Laravel application may result in unexpected behavior, issues and/or loss of data (namely routes or translations being replaced).
+>Routes will be added to routes/web.php and translation file will be added as lang/en.json, make sure to back up these files case theres work you would like to save or ensure it is only installed on a new application.
+
 You may use Composer to install Team Profiler into your new Laravel Jetstream project:
 
 ```bash
 composer require m-nobre/team-profiler
 ```
-
->:warning: **New applications only** 
->Team-Profiler should only be installed into new Laravel Jetstream applications and in EN locale. 
->Attempting to install Team-Profiler into an existing Laravel application may result in unexpected behavior, issues and/or loss of data: Routes will be added to routes/web.php and translation file will be added as lang/en.json, make sure to back up these files case theres work you would like to save or ensure it is only installed on a new application.
-
-
-After installing the Team-Profiler package, new routes will be added to your main routes file, these routes are written in a **non-intrusive** way as auto-removal is not available, these routes can manually be removed upon uninstallation.
 
 ## Publish Assets
 
