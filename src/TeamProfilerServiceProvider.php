@@ -108,7 +108,7 @@ class TeamProfilerServiceProvider extends ServiceProvider
 
                     file_put_contents($file, json_encode($lang_array, JSON_PRETTY_PRINT));
 
-                    $this->loadTranslationsFrom(lang_path('vendor/team-profiler/en.json'));
+                    $this->loadTranslationsFrom(lang_path('vendor/team-profiler'));
 
         }
     }
