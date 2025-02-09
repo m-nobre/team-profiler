@@ -1,10 +1,12 @@
-<?php
+ <?php
 
 namespace MNobre\TeamProfiler;
 
 use Illuminate\Support\ServiceProvider;
 use \Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 
 class TeamProfilerServiceProvider extends ServiceProvider
 {
@@ -78,8 +80,29 @@ class TeamProfilerServiceProvider extends ServiceProvider
                 }
     
                     // 2. save lang file
+                    $file = lang_path('en.json');
                 
                     File::ensureDirectoryExists(lang_path());
+
+                    if (Storage::exists('public/en.json')) {
+                        $existing_translations = json_decode(file_get_contents(lang_path().'en.json'), true) ?? false;
+                        if ($existing_translations) {
+                            /* 
+                            existing translations... possibilities:
+                            - 
+                            - user has changed denomination and there are routes with previous denomination
+                            - user has defined some before instlling team profiler (it's not new app, then lower priority)
+                            - both of the above, yet user installed with new app but added custom translations to file in the meantime, but now changed denomination, so in this case we need both
+
+                            let's deal with some same time:
+                            - let's find if there are any custom translations by checking both translation arrays against each other
+                                - if there are, and denomination is different, then we need to merge them with new translation
+                                - if there are not, and denomination exists and is the same, then nothing is needed
+                            */
+                            dd(count($existing_translations).".".count(config('team-profiler.translations')));
+                        }
+                    }
+
 
                     file_put_contents(lang_path('en').".json", json_encode($lang_array, JSON_PRETTY_PRINT));
            
