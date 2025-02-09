@@ -38,23 +38,26 @@ class TeamProfilerServiceProvider extends ServiceProvider
         // $this->addRoutesToWeb();
         // $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
-        if (!Lang::hasForLocale(array_key_first(config('team-profiler.translations')), 'en')) {
+        /* If "Manage Team" translation already exists in EN */
+
+        if (!Lang::hasForLocale(array_key_first(config('team-profiler.translations')), 'en') || !strpos(strtolower(Lang::get(config('team-profiler.translations'))), strtolower(config('team-profiler.denomination')))) {
+
 
             // if file exists we will parse json to keep current translations
             
-            try {
+            // try {
 
-                $lang_array = json_decode(file_get_contents(lang_path('en').".json"), true);
+            //     $lang_array = json_decode(file_get_contents(lang_path('en').".json"), true);
 
-            } catch (\Throwable $th) {
+            // } catch (\Throwable $th) {
                 
-                // TODO - deal with exception case it is not "file not found" and some other error
-                // is_array(array_key_exists(3, explode(":",$th->getMessage())))
+            //     // TODO - deal with exception case it is not "file not found" and some other error
+            //     // is_array(array_key_exists(3, explode(":",$th->getMessage())))
                 
-                // File not found, we create  a empty array
-                $lang_array = array();
+            //     // File not found, we create  a empty array
+            //     $lang_array = array();
 
-            }
+            // }
 
                 // if no error, file exists, we need to;
 
@@ -74,37 +77,36 @@ class TeamProfilerServiceProvider extends ServiceProvider
 
                 }
                 
-                $existing_translations = json_decode(file_get_contents(lang_path().'en.json'), true) ?? false;
-                dd(count($existing_translations).".".count(config('team-profiler.translations')));
+                // $existing_translations = json_decode(file_get_contents(lang_path().'en.json'), true) ?? false;
+                // dd(count($existing_translations).".".count(config('team-profiler.translations')));
                 foreach ($translated as $key => $value) {
                     /* we would override anyway, so simplified by just updating case exists */
                     $lang_array[$key] = $value;
                 }
-    
                     // 2. save lang file
-                    $file = lang_path('en.json');
+                    $file = lang_path('vendor/team-profiler/en.json');
                 
-                    File::ensureDirectoryExists(lang_path());
+                    File::ensureDirectoryExists(lang_path("vendor/team-profiler/"));
 
-                    if (Storage::exists($file)) {
-                        if ($existing_translations) {
-                            /* 
-                            existing translations... possibilities:
-                            - 
-                            - user has changed denomination and there are routes with previous denomination
-                            - user has defined some before instlling team profiler (it's not new app, then lower priority)
-                            - both of the above, yet user installed with new app but added custom translations to file in the meantime, but now changed denomination, so in this case we need both
+                    // if (Storage::exists($file)) {
+                    //     if ($existing_translations) {
+                    //         /* 
+                    //         existing translations... possibilities:
+                    //         - 
+                    //         - user has changed denomination and there are routes with previous denomination
+                    //         - user has defined some before instlling team profiler (it's not new app, then lower priority)
+                    //         - both of the above, yet user installed with new app but added custom translations to file in the meantime, but now changed denomination, so in this case we need both
 
-                            let's deal with some same time:
-                            - let's find if there are any custom translations by checking both translation arrays against each other
-                                - if there are, and denomination is different, then we need to merge them with new translation
-                                - if there are not, and denomination exists and is the same, then nothing is needed
-                            */
-                        }
-                    }
+                    //         let's deal with some same time:
+                    //         - let's find if there are any custom translations by checking both translation arrays against each other
+                    //             - if there are, and denomination is different, then we need to merge them with new translation
+                    //             - if there are not, and denomination exists and is the same, then nothing is needed
+                    //         */
+                    //     }
+                    // }
 
 
-                    file_put_contents(lang_path('en').".json", json_encode($lang_array, JSON_PRETTY_PRINT));
+                    file_put_contents($file, json_encode($lang_array, JSON_PRETTY_PRINT));
            
         }
     }
