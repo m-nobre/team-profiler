@@ -73,7 +73,9 @@ class TeamProfilerServiceProvider extends ServiceProvider
 
 
                 }
-
+                
+                $existing_translations = json_decode(file_get_contents(lang_path().'en.json'), true) ?? false;
+                dd(count($existing_translations).".".count(config('team-profiler.translations')));
                 foreach ($translated as $key => $value) {
                     /* we would override anyway, so simplified by just updating case exists */
                     $lang_array[$key] = $value;
@@ -85,7 +87,6 @@ class TeamProfilerServiceProvider extends ServiceProvider
                     File::ensureDirectoryExists(lang_path());
 
                     if (Storage::exists($file)) {
-                        $existing_translations = json_decode(file_get_contents(lang_path().'en.json'), true) ?? false;
                         if ($existing_translations) {
                             /* 
                             existing translations... possibilities:
@@ -99,7 +100,6 @@ class TeamProfilerServiceProvider extends ServiceProvider
                                 - if there are, and denomination is different, then we need to merge them with new translation
                                 - if there are not, and denomination exists and is the same, then nothing is needed
                             */
-                            dd(count($existing_translations).".".count(config('team-profiler.translations')));
                         }
                     }
 
