@@ -33,8 +33,8 @@ class TeamProfilerServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->addRoutesToWeb();
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        // $this->addRoutesToWeb();
+        // $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         if (!Lang::hasForLocale(array_key_first(config('team-profiler.translations')), 'en')) {
 
