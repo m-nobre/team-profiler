@@ -84,7 +84,7 @@ class TeamProfilerServiceProvider extends ServiceProvider
                 
                     File::ensureDirectoryExists(lang_path());
 
-                    if (Storage::exists('public/en.json')) {
+                    if (Storage::exists($file)) {
                         $existing_translations = json_decode(file_get_contents(lang_path().'en.json'), true) ?? false;
                         if ($existing_translations) {
                             /* 
