@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use \Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
 
 
 class TeamProfilerServiceProvider extends ServiceProvider
@@ -35,13 +37,14 @@ class TeamProfilerServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->checkProfilerTranslation();
         // check if translation exists
-        if (!strpos(strtolower(Lang::get(array_key_first(config('team-profiler.translations')))), strtolower(config('team-profiler.denomination')))) {
-                            $existing_translations = json_decode(file_get_contents(lang_path('en.json')), true) ?? false;
+        // if (!strpos(strtolower(Lang::get(array_key_first(config('team-profiler.translations')))), strtolower(config('team-profiler.denomination')))) {
+        //                     $existing_translations = json_decode(file_get_contents(lang_path('en.json')), true) ?? false;
 
-                            dd(count($existing_translations).".".count(config('team-profiler.translations')));
+        //                     dd(count($existing_translations).".".count(config('team-profiler.translations')));
 
-        }
+        // }
             // if yes
                 // checks if it's team profiler
                     // compare both by number of entries and keys
@@ -128,6 +131,78 @@ class TeamProfilerServiceProvider extends ServiceProvider
         // }
     }
 
+    public function checkProfilerTranslation(): bool {
+        
+        $profilerDenomination = config('team-profiler.denomination'); // project
+        $profilerFirstTrKey = array_key_first(config('team-profiler.translations')); // Returns "Team Name"
+        $profilerFirstTrValue = Lang::get($profilerFirstTrKey); // The translation for key "Team Name". Returns "Project Name"
+
+        // if translation for teams in english is set and if the correspondent translation includes our custom denomination returns true
+        if (Lang::hasForLocale($profilerFirstTrKey, 'en') && strpos( strtolower($profilerFirstTrValue), strtolower($profilerDenomination))) {
+                return true;
+        } else { // translation does not exist
+            /* check for file */
+            if(!File::exists(lang_path('en.json'))) {
+
+                // path does not exist, create our file guilt free
+                if ($this->createProfilerTranslations()) {
+                    return true;
+                }
+                // else
+                return false;
+            }
+
+            // File exists yet no ProfilerTranslations
+            // so we need to append to file by passing "true" as attribute
+            if ($this->createProfilerTranslations(true)) {
+                return true;
+            }
+
+        }
+
+
+        return false;
+    }
+    public function createProfilerTranslations($append = false): bool {
+        
+        $translated = array();
+
+        foreach (config('team-profiler.translations') as $key => $value) {
+
+            /* str_contains is case sensitive */
+            
+            $translated[$key] = str_replace("Team", ucfirst(config('team-profiler.denomination')), str_replace("team", strtolower(config('team-profiler.denomination')), $key));
+
+
+        }
+
+        foreach ($translated as $key => $value) {
+            /* we would override anyway, so simplified by just updating case exists */
+            $lang_array[$key] = $value;
+        }
+
+        // 2. save lang file
+    
+        File::ensureDirectoryExists(lang_path());
+
+        try {
+            // double verification file exists if append is True
+            if ($append && File::exists(lang_path('en.json'))) { 
+                $existing_translations = json_decode(file_get_contents(lang_path('en.json')), true);
+                $lang_array = $lang_array + $existing_translations;
+            }
+            
+            file_put_contents(lang_path('en.json'), json_encode($lang_array, JSON_PRETTY_PRINT));
+            
+            return True;
+
+        } catch (\Throwable $th) {
+            
+            Log::debug('Error saving translation file by TeamProfiler', array($th->getMessage()));
+            
+            return False;
+        }
+    }
     public function checkValue($needle, $haystack){
         
         if (is_array($haystack)) {
