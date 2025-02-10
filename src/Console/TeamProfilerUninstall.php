@@ -63,16 +63,14 @@ class TeamProfilerUninstall extends Command
                     break;
     
                 default: 
-                    echo "Running uninstaller...";
                     echo "Thank you.";
                     break;
     
             }
         } else {
-            $this->info('Running uninstaller...');
             $this->info('Thank you.');
 
-            passthru(PHP_BINARY.' composer remove m-nobre/team-profiler');
+            passthru('php composer remove m-nobre/team-profiler');
         }
     }
 }
