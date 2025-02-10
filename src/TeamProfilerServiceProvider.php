@@ -36,7 +36,7 @@ class TeamProfilerServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // check if translation exists
-        if (!strpos(strtolower(Lang::get(config('team-profiler.translations'))), strtolower(config('team-profiler.denomination')))) {
+        if (!strpos(strtolower(Lang::get(array_key_first(config('team-profiler.translations')))), strtolower(config('team-profiler.denomination')))) {
             dd("whoah");
         }
             // if yes
