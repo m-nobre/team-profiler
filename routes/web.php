@@ -43,8 +43,8 @@ if (class_exists("MNobre\TeamProfiler\Http\Middleware\RedirectTeamRoutes")) {
 
             if ($noun = strtolower(config('team-profiler.denomination', 'team'))) {
     
-                Route::get('/' . $noun . 's/create', [Laravel\Jetstream\Http\Controllers\Livewire\TeamController::class, 'create'])->name('teams.create');
-                Route::get('/' . $noun . 's/{team}', [Laravel\Jetstream\Http\Controllers\Livewire\TeamController::class, 'show'])->name('teams.show');
+                Route::get('/' . Illuminate\Support\Str::plural($noun) . '/create', [Laravel\Jetstream\Http\Controllers\Livewire\TeamController::class, 'create'])->name('teams.create');
+                Route::get('/' . Illuminate\Support\Str::plural($noun) . '/{team}', [Laravel\Jetstream\Http\Controllers\Livewire\TeamController::class, 'show'])->name('teams.show');
                 Route::put('/current-' . $noun, [Laravel\Jetstream\Http\Controllers\CurrentTeamController::class, 'update'])->name('current-team.update');
             
                 Route::get('/' . $noun . '-invitations/{invitation}', [Laravel\Jetstream\Http\Controllers\TeamInvitationController::class, 'accept'])
