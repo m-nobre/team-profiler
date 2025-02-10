@@ -37,7 +37,10 @@ class TeamProfilerServiceProvider extends ServiceProvider
     {
         // check if translation exists
         if (!strpos(strtolower(Lang::get(array_key_first(config('team-profiler.translations')))), strtolower(config('team-profiler.denomination')))) {
-            dd("whoah");
+                            $existing_translations = json_decode(file_get_contents(lang_path().'en.json'), true) ?? false;
+
+                            dd(count($existing_translations).".".count(config('team-profiler.translations')));
+
         }
             // if yes
                 // checks if it's team profiler
@@ -91,7 +94,6 @@ class TeamProfilerServiceProvider extends ServiceProvider
         //         }
                 
         //         // $existing_translations = json_decode(file_get_contents(lang_path().'en.json'), true) ?? false;
-        //         // dd(count($existing_translations).".".count(config('team-profiler.translations')));
         //         foreach ($translated as $key => $value) {
         //             /* we would override anyway, so simplified by just updating case exists */
         //             $lang_array[$key] = $value;
