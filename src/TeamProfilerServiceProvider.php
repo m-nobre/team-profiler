@@ -136,10 +136,20 @@ class TeamProfilerServiceProvider extends ServiceProvider
         $profilerDenomination = config('team-profiler.denomination'); // project
         $profilerFirstTrKey = array_key_first(config('team-profiler.translations')); // Returns "Team Name"
         $profilerFirstTrValue = Lang::get($profilerFirstTrKey); // The translation for key "Team Name". Returns "Project Name"
+        $existing_translations = json_decode(file_get_contents(lang_path('en.json')), true);
 
         // if translation for teams in english is set and if the correspondent translation includes our custom denomination returns true
         if (Lang::hasForLocale($profilerFirstTrKey, 'en') && strpos( strtolower($profilerFirstTrValue), strtolower($profilerDenomination))) {
+            if (count($existing_translations) === count(config('team-profiler.translations'))) {
                 return true;
+            } else {
+                if ($this->createProfilerTranslations(true)) {
+                    return true;
+                }
+            }
+
+            return false;
+
         } else { // translation does not exist
             /* check for file */
             if(!File::exists(lang_path('en.json'))) {
