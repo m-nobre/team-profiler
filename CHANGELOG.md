@@ -3,10 +3,12 @@
 ### Added
 
 - Changelog
+- Command to remove package automatically and perform clean up of TeamProfiler routes and translation if user does not want to do it manually (artisan team-profile:uninstall)
 
 ### Changed
 
 - Changed Route Noun to be always lowercase to minimize impacts of user input in config, can be "Project" or "project" and system keeps it consistent
+- Readme to reflect current changes and also this documentation. 
 
 ### Removed
 
