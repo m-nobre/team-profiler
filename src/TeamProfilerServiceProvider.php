@@ -53,7 +53,7 @@ class TeamProfilerServiceProvider extends ServiceProvider
             // folder exists
             $existing_translations = json_decode(file_get_contents(lang_path('en.json')), true);
 
-            if (!array_diff_key($existing_translations, config('team-profiler.translations'))) {
+            if (!array_diff_key($existing_translations, config('team-profiler.translations')) && count($existing_translations) === count(config('team-profiler.translations'))) {
                 
                 return true;
             
