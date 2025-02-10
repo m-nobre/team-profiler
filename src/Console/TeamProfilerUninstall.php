@@ -78,7 +78,10 @@ class TeamProfilerUninstall extends Command
                     
                     if (!empty($existing_translations[$key])) {
                         Log::info(strtolower($existing_translations[$key])." - ". strtolower($profilerDenomination));
-                        if (str_contains(strtolower($existing_translations[$key]), strtolower($profilerDenomination))) {
+                        if (
+                            str_contains(strtolower($existing_translations[$key]), strtolower($profilerDenomination)) ||
+                            str_starts_with(strtolower($existing_translations[$key]), strtolower($profilerDenomination))
+                            ) {
                             Log::info(strtolower($existing_translations[$key])." - ". strtolower($profilerDenomination));
                             unset($existing_translations[$key]);
                         }
