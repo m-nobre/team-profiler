@@ -6,9 +6,6 @@ use Illuminate\Console\Command;
 use \Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 
-use Composer\Script\Event;
-use Composer\Installer\PackageEvent;
-
 
 
 class TeamProfilerUninstall extends Command

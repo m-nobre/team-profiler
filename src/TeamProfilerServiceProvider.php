@@ -5,7 +5,6 @@ namespace MNobre\TeamProfiler;
 use Illuminate\Support\ServiceProvider;
 use \Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
