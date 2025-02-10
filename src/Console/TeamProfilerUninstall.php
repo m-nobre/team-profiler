@@ -50,22 +50,26 @@ class TeamProfilerUninstall extends Command
         file_put_contents(base_path('routes/web.php'), $text.PHP_EOL);
         $this->info('Removing Package..');
 
-        $pid = pcntl_fork();
-        switch($pid){
-            case -1:    
-                $this->Error('Could not fork');
-                break;
-
-            case 0:    
-                exec("php composer remove m-nobre/team-profiler");
-                
-                break;
-
-            default: 
-                echo "Running uninstaller...";
-                echo "Thank you.";
-                break;
-
+        if (function_exists('pcntl_fork')) {
+            $pid = pcntl_fork();
+            switch($pid){
+                case -1:    
+                    $this->Error('Could not fork');
+                    break;
+    
+                case 0:    
+                    exec("php composer remove m-nobre/team-profiler");
+                    
+                    break;
+    
+                default: 
+                    echo "Running uninstaller...";
+                    echo "Thank you.";
+                    break;
+    
+            }
+        } else {
+            exec('php composer remove m-nobre/team-profiler > /dev/null &');
         }
     }
 }
