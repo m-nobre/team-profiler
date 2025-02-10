@@ -165,7 +165,7 @@ class TeamProfilerServiceProvider extends ServiceProvider
     }
 
     //not working... TODO
-    public function postPackageUninstall(){
+    public function prePackageUninstall(){
         
         // not working :(
 
