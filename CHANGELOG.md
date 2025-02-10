@@ -6,11 +6,11 @@
 
 ### Changed
 
-...
+- Changed Route Noun to be always lowercase to minimize impacts of user input in config, can be "Project" or "project" and system keeps it consistent
 
 ### Removed
 
-...
+- Post and Pre Uninstall scripts as following documentation does not seem possible to achieve due to being a package, maybe some for as a plugin yet once it's only a section that user must remove on the post uninstall, the TeamProfiler section in the routes file that only gets called case package is installed and it's completely bypassed otherwise. So clean up is not priority, will make sure documentation reflects this so user has the information in the meantime.
 
 ## [1.0.2] - 2025-02-09
 

@@ -38,6 +38,8 @@ class TeamProfilerUninstall extends Command
      */
     public function handle()
     {
+        $this->info('Uninstalling Team Profiler.');
+        $this->info('Removing Custom Routes...');
 
         $user_routes = file_get_contents(base_path('routes/web.php'));
 
@@ -46,5 +48,23 @@ class TeamProfilerUninstall extends Command
         $user_data = [$section_start[0], $section_end[1]];
         $text = implode("\n", $user_data);
         file_put_contents(base_path('routes/web.php'), $text.PHP_EOL);
+        $this->info('Removing Package..');
+
+        $pid = pcntl_fork();
+        switch($pid){
+            case -1:    
+                $this->Error('Could not fork');
+                break;
+
+            case 0:    
+                exec("php composer remove m-nobre/team-profiler");
+                
+                break;
+
+            default: 
+                echo "Running uninstaller...";
+                echo "Thank you.";
+                break;
+
     }
 }

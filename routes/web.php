@@ -41,7 +41,7 @@ if (class_exists("MNobre\TeamProfiler\Http\Middleware\RedirectTeamRoutes")) {
         Route::middleware(['web', 'auth', MNobre\TeamProfiler\Http\Middleware\RedirectTeamRoutes::class])
         ->group(function () {
 
-            if ($noun = config('team-profiler.denomination', 'team')) {
+            if ($noun = strtolower(config('team-profiler.denomination', 'team'))) {
     
                 Route::get('/' . $noun . 's/create', [Laravel\Jetstream\Http\Controllers\Livewire\TeamController::class, 'create'])->name('teams.create');
                 Route::get('/' . $noun . 's/{team}', [Laravel\Jetstream\Http\Controllers\Livewire\TeamController::class, 'show'])->name('teams.show');
