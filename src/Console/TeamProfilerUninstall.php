@@ -66,5 +66,6 @@ class TeamProfilerUninstall extends Command
                 echo "Thank you.";
                 break;
 
+        }
     }
 }
