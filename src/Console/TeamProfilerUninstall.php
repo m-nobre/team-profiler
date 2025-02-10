@@ -69,7 +69,7 @@ class TeamProfilerUninstall extends Command
     
             }
         } else {
-            exec('php composer remove m-nobre/team-profiler');
+            passthru('php composer remove m-nobre/team-profiler');
         }
     }
 }
