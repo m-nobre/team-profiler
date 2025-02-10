@@ -58,7 +58,7 @@ class TeamProfilerUninstall extends Command
                     break;
     
                 case 0:    
-                    exec("php composer remove m-nobre/team-profiler");
+                    exec("composer remove m-nobre/team-profiler");
                     
                     break;
     
@@ -70,7 +70,7 @@ class TeamProfilerUninstall extends Command
         } else {
             $this->info('Thank you.');
 
-            passthru(PHP_BINARY.' -f '.base_path().'/composer remove m-nobre/team-profiler');
+            passthru('composer remove m-nobre/team-profiler');
         }
     }
 }
