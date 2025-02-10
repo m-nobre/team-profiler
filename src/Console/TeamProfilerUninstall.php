@@ -4,6 +4,7 @@ namespace MNobre\TeamProfiler\Console;
 
 use Illuminate\Console\Command;
 use \Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
 
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
@@ -74,6 +75,8 @@ class TeamProfilerUninstall extends Command
                 $existing_translations = json_decode(file_get_contents(lang_path('en.json')), true);
     
                 foreach (config('team-profiler.translations') as $key => $value) {
+                    
+                    Log::info(strtolower($existing_translations[$key])." - ". strtolower($profilerDenomination));
                     if ($existing_translations[$key]) {
                         if (strpos(strtolower($existing_translations[$key]), strtolower($profilerDenomination))) {
                             unset($existing_translations[$key]);
