@@ -16,7 +16,8 @@ class TeamProfilerServiceProvider extends ServiceProvider
     {
         //Register generate command
         $this->commands([
-           \MNobre\TeamProfiler\Console\TeamProfilerInstall::class,
+        //    \MNobre\TeamProfiler\Console\TeamProfilerInstall::class,
+           \MNobre\TeamProfiler\Console\TeamProfilerUninstall::class,
         ]);
  
         //Register Config file
