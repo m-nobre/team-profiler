@@ -3,6 +3,8 @@
 namespace MNobre\TeamProfiler\Console;
 
 use Illuminate\Console\Command;
+use \Illuminate\Support\Facades\Lang;
+
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 
@@ -48,29 +50,45 @@ class TeamProfilerUninstall extends Command
         $user_data = [$section_start[0], $section_end[1]];
         $text = implode("\n", $user_data);
         file_put_contents(base_path('routes/web.php'), $text.PHP_EOL);
-        $this->info('Removing Package..');
+        $this->info('Removing Package translations..');
+        
+        $this->cleanProfilerTranslation() ? 
+            $this->info('Removed translations successfully') : 
+            $this->error('Error removing translations, check file.');
+        
+        $this->info('Thank you.');
 
-        if (function_exists('pcntl_fork')) {
-            $pid = pcntl_fork();
-            switch($pid){
-                case -1:    
-                    $this->Error('Could not fork');
-                    break;
+        passthru('composer remove m-nobre/team-profiler');
+    }
+
+    public function cleanProfilerTranslation(): bool {
+        
+        $profilerDenomination = config('team-profiler.denomination'); // project
+        $profilerFirstTrKey = array_key_first(config('team-profiler.translations')); // Returns "Team Name"
+        $profilerFirstTrValue = Lang::get($profilerFirstTrKey); // The translation for key "Team Name". Returns "Project Name"
+
+        try {
+            if (Lang::hasForLocale($profilerFirstTrKey, 'en') && strpos( strtolower($profilerFirstTrValue), strtolower($profilerDenomination))) {
+                
+                // folder exists
+                $existing_translations = json_decode(file_get_contents(lang_path('en.json')), true);
     
-                case 0:    
-                    exec("composer remove m-nobre/team-profiler");
-                    
-                    break;
-    
-                default: 
-                    echo "Thank you.";
-                    break;
+                foreach (config('team-profiler.translations') as $key => $value) {
+                    if ($existing_translations[$key]) {
+                        if (strpos($existing_translations[$key], $profilerDenomination)) {
+                            unset($existing_translations[$key]);
+                        }
+                    }
+                }
+                
+                file_put_contents(lang_path('en.json'), json_encode($existing_translations, JSON_PRETTY_PRINT));
+
+                return true;
     
             }
-        } else {
-            $this->info('Thank you.');
-
-            passthru('composer remove m-nobre/team-profiler');
+        } catch (\Throwable $th) {            
+            return false;
         }
+        return false;
     }
 }
