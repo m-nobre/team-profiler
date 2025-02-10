@@ -75,7 +75,7 @@ class TeamProfilerUninstall extends Command
     
                 foreach (config('team-profiler.translations') as $key => $value) {
                     if ($existing_translations[$key]) {
-                        if (strpos($existing_translations[$key], $profilerDenomination)) {
+                        if (strpos(strtolower($existing_translations[$key]), strtolower($profilerDenomination))) {
                             $existing_translations[$key] = $key;
                         }
                     }
