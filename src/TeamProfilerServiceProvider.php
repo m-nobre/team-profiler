@@ -37,8 +37,8 @@ class TeamProfilerServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        // checks, creates and or appends translations
         $this->checkProfilerTranslation();
-
     }
 
     public function checkProfilerTranslation(): bool {
@@ -157,6 +157,8 @@ class TeamProfilerServiceProvider extends ServiceProvider
             }
         }
     }
+
+    //not working... TODO
     public function postPackageUninstall(){
         
         // not working :(
