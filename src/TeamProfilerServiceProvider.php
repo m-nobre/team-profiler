@@ -37,7 +37,7 @@ class TeamProfilerServiceProvider extends ServiceProvider
     {
         // check if translation exists
         if (!strpos(strtolower(Lang::get(array_key_first(config('team-profiler.translations')))), strtolower(config('team-profiler.denomination')))) {
-                            $existing_translations = json_decode(file_get_contents(lang_path().'en.json'), true) ?? false;
+                            $existing_translations = json_decode(file_get_contents(lang_path('en.json')), true) ?? false;
 
                             dd(count($existing_translations).".".count(config('team-profiler.translations')));
 
